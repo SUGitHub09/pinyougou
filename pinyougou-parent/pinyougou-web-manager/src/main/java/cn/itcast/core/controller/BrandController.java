@@ -1,14 +1,20 @@
 package cn.itcast.core.controller;
 
+import cn.itcast.common.utils.POIUtils;
 import cn.itcast.core.pojo.good.Brand;
 import cn.itcast.core.service.BrandService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import entity.PageResult;
 import entity.Result;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -68,4 +74,24 @@ public class BrandController {
     public List<Map> selectOptionList(){
         return brandService.selectOptionList();
     }
+
+    @RequestMapping("/uploadExcelForStore")
+    public Result uploadExcelForStore(MultipartFile file) {
+
+        try {
+
+            POIUtils poiUtils = new POIUtils();
+
+            List<String[]> list = poiUtils.ParseExcel(file);
+
+            brandService.uploadExcelForStore(list);
+
+            return new Result(true, "导入成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(true, "导入失败");
+
+        }
+    }
+
 }

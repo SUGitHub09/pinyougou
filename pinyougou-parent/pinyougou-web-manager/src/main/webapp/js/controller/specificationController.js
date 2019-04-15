@@ -1,5 +1,5 @@
  //控制层 
-app.controller('specificationController' ,function($scope,$controller   ,specificationService){	
+app.controller('specificationController' ,function($scope,$controller  ,specificationService,specificationUploadService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -86,5 +86,17 @@ app.controller('specificationController' ,function($scope,$controller   ,specifi
 	$scope.deleteTableRow = function(index){
 		$scope.entity.specificationOptionList.splice(index,1);
 	}
-    
+
+    $scope.uploadFile = function(){
+        // 调用uploadService的方法完成文件的上传
+        specificationUploadService.uploadFile().success(function(response){
+            if(response.flag){
+                alert( response.message);
+            }else{
+                alert(response.message);
+            }
+        });
+    }
+
+
 });	

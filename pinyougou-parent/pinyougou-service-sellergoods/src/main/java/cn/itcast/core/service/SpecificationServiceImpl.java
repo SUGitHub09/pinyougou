@@ -93,4 +93,30 @@ public class SpecificationServiceImpl implements SpecificationService{
     public List<Map> selectOptionList() {
         return specificationDao.selectOptionList();
     }
+
+    @Override
+    public void uploadExcelForStore(List<String[]> list) {
+
+        if (list != null && list.size() > 0) {
+
+            for (String[] strings : list) {
+
+                Specification specification = new Specification();
+                specification.setId(Long.parseLong(strings[0]));
+                specification.setSpecName(strings[1]);
+
+                specificationDao.insertSelective(specification);
+
+
+
+            }
+
+
+
+
+
+        }
+
+
+    }
 }

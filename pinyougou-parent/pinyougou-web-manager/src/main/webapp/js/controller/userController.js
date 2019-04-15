@@ -1,11 +1,11 @@
  //控制层
-app.controller('sellerController' ,function($scope,$controller   ,sellerService){	
+app.controller('userController' ,function($scope,$controller   ,userService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
     //读取列表数据绑定到表单中  
 	$scope.findAll=function(){
-		sellerService.findAll().success(
+        userService.findAll().success(
 			function(response){
 				$scope.list=response;
 			}			
@@ -13,8 +13,8 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 	}    
 	
 	//分页
-	$scope.findPage=function(page,rows){			
-		sellerService.findPage(page,rows).success(
+	$scope.findPage=function(page,rows){
+        userService.findPage(page,rows).success(
 			function(response){
 				$scope.list=response.rows;	
 				$scope.paginationConf.totalItems=response.total;//更新总记录数
@@ -23,8 +23,8 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 	}
 	
 	//查询实体 
-	$scope.findOne=function(id){				
-		sellerService.findOne(id).success(
+	$scope.findOne=function(id){
+        userService.findOne(id).success(
 			function(response){
 				$scope.entity= response;					
 			}
@@ -33,7 +33,7 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 
     //查询
     $scope.findOneForExcel=function(id) {
-        sellerService.findOneForExcel(id).success(
+        userService.findOneForExcel(id).success(
             function (response) {
                 if (response.flag == true) {
                     alert(response.message)
@@ -44,8 +44,8 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
             }
         );
     }
-        $scope.findOneForOrder=function(id){
-        sellerService.findOneForOrder(id).success(
+    $scope.userBlock=function(id){
+        userService.userBlock(id).success(
             function(response){
                 if (response.flag==true) {
 					alert(response.message)
@@ -80,7 +80,7 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 	//批量删除 
 	$scope.dele=function(){			
 		//获取选中的复选框			
-		sellerService.dele( $scope.selectIds ).success(
+        userService.dele( $scope.selectIds ).success(
 			function(response){
 				if(response.flag){
 					$scope.reloadList();//刷新列表
@@ -93,8 +93,8 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 	$scope.searchEntity={};//定义搜索对象 
 	
 	//搜索
-	$scope.search=function(page,rows){			
-		sellerService.search(page,rows,$scope.searchEntity).success(
+	$scope.search=function(page,rows){
+        userService.search(page,rows,$scope.searchEntity).success(
 			function(response){
 				$scope.list=response.rows;	
 				$scope.paginationConf.totalItems=response.total;//更新总记录数
@@ -103,7 +103,7 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 	}
     
 	$scope.updateStatus = function(sellerId,status){
-		sellerService.updateStatus(sellerId,status).success(function(response){
+        userService.updateStatus(sellerId,status).success(function(response){
 			if(response.flag){
 				//重新查询 
 	        	$scope.reloadList();//重新加载

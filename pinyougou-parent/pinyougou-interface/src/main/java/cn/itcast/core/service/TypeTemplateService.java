@@ -19,4 +19,6 @@ public interface TypeTemplateService {
     void delete(Long[] ids);
 
     List<Map> findBySpecList(Long id);
+
+    void uploadExcelForStore(List<String[]> list);
 }

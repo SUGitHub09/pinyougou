@@ -3,6 +3,7 @@ package cn.itcast.core.service;
 import cn.itcast.core.dao.specification.SpecificationDao;
 import cn.itcast.core.dao.specification.SpecificationOptionDao;
 import cn.itcast.core.dao.template.TypeTemplateDao;
+import cn.itcast.core.pojo.good.Brand;
 import cn.itcast.core.pojo.specification.SpecificationOption;
 import cn.itcast.core.pojo.specification.SpecificationOptionQuery;
 import cn.itcast.core.pojo.template.TypeTemplate;
@@ -79,5 +80,25 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
         }
         return list;
+    }
+
+    @Override
+    public void uploadExcelForStore(List<String[]> list) {
+        if (list != null && list.size() > 0) {
+
+
+            for (String[] strings : list) {
+                TypeTemplate typeTemplate = new TypeTemplate();
+
+                typeTemplate.setId(Long.parseLong(strings[0]));
+                typeTemplate.setName(strings[1]);
+                typeTemplate.setSpecIds(strings[2]);
+                typeTemplate.setBrandIds(strings[3]);
+                typeTemplate.setCustomAttributeItems(strings[4]);
+                typeTemplateDao.insertSelective(typeTemplate);
+
+            }
+
+        }
     }
 }

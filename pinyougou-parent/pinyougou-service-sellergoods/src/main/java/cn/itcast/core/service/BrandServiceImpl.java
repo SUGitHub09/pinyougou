@@ -73,4 +73,23 @@ public class BrandServiceImpl implements BrandService {
 
         return brandDao.selectOptionList();
     }
+
+    @Override
+    public void uploadExcelForStore(List<String[]> list) {
+
+        if (list != null && list.size() > 0) {
+
+
+            for (String[] strings : list) {
+                Brand brand = new Brand();
+                brand.setId(Long.parseLong(strings[0]));
+                brand.setName(strings[1]);
+                brand.setFirstChar(strings[2]);
+                brandDao.insertSelective(brand);
+            }
+
+        }
+
+
+    }
 }

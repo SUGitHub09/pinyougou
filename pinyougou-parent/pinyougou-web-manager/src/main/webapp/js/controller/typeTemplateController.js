@@ -1,5 +1,5 @@
 //控制层 
-app.controller('typeTemplateController' ,function($scope,$controller,brandService ,specificationService  ,typeTemplateService){	
+app.controller('typeTemplateController' ,function($scope,$controller,brandService ,specificationService  ,typeTemplateService,typeTemplateUploadService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -108,4 +108,15 @@ app.controller('typeTemplateController' ,function($scope,$controller,brandServic
 	$scope.deleteTableRow = function(index){
 		$scope.entity.customAttributeItems.splice(index,1);
 	}
+
+    $scope.uploadFile = function(){
+        // 调用uploadService的方法完成文件的上传
+        typeTemplateUploadService.uploadFile().success(function(response){
+            if(response.flag){
+                alert( response.message);
+            }else{
+                alert(response.message);
+            }
+        });
+    }
 });	

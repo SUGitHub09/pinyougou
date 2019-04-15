@@ -1,5 +1,5 @@
  //控制层 
-app.controller('itemCatController' ,function($scope,$controller   ,itemCatService){	
+app.controller('itemCatController' ,function($scope,$controller ,itemCatService,itemCatUploadService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -110,8 +110,17 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 		
 		$scope.findByParentId(p_entity.id);
 	}
-	
-	
+
+    $scope.uploadFile = function(){
+        // 调用uploadService的方法完成文件的上传
+        itemCatUploadService.uploadFile().success(function(response){
+            if(response.flag){
+                alert( response.message);
+            }else{
+                alert(response.message);
+            }
+        });
+    }
 	
 	
 	

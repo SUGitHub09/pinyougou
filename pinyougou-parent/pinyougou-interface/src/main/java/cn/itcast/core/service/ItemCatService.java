@@ -16,4 +16,7 @@ public interface ItemCatService {
 
 
     List<ItemCat> findAll();
+
+    void uploadExcelForStore(List<String[]> list);
+
 }

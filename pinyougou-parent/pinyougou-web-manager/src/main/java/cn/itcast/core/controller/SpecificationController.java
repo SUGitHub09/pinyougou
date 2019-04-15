@@ -1,5 +1,6 @@
 package cn.itcast.core.controller;
 
+import cn.itcast.common.utils.POIUtils;
 import cn.itcast.core.pojo.specification.Specification;
 import cn.itcast.core.service.SpecificationService;
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -9,12 +10,13 @@ import entity.Result;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import vo.SpecificationVo;
 
 import java.util.List;
 import java.util.Map;
 
-
+@SuppressWarnings("all")
 @RestController
 @RequestMapping("/specification")
 public class SpecificationController {
@@ -63,4 +65,25 @@ public class SpecificationController {
     public List<Map> selectOptionList(){
         return specificationService.selectOptionList();
     }
+
+    @RequestMapping("/uploadExcelForStore")
+    public Result uploadExcelForStore(MultipartFile file) {
+
+        try {
+
+            POIUtils poiUtils = new POIUtils();
+
+            List<String[]> list = poiUtils.ParseExcel(file);
+
+            specificationService.uploadExcelForStore(list);
+
+            return new Result(true, "导入成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(true, "导入失败");
+
+        }
+    }
+
+
 }

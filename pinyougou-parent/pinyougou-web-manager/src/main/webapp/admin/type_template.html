@@ -27,7 +27,8 @@
     <script type="text/javascript" src="../js/service/brandService.js"></script>
     <script type="text/javascript" src="../js/service/specificationService.js"></script>
     <script type="text/javascript" src="../js/controller/typeTemplateController.js"></script>
-    
+    <script type="text/javascript" src="../js/service/typeTempaleUploadService.js"></script>
+
     <!-- 引入select2的相关的css和js -->
     <link rel="stylesheet" href="../plugins/select2/select2.css" />
     <link rel="stylesheet" href="../plugins/select2/select2-bootstrap.css" />
@@ -54,8 +55,9 @@
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default" title="新建"  data-toggle="modal" data-target="#editModal" ng-click="entity={customAttributeItems:[]}" ><i class="fa fa-file-o"></i> 新建</button>
                                         <button type="button" class="btn btn-default" ng-click="dele()" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
-                                       
-                                        <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+										<button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+										<button type="button" class="btn btn-default" title="从excel导入数据" ng-click="uploadFile()"><i class="fa fa-refresh"></i> 从excel导入数据</button>
+										<input type="file" id="file" />
                                     </div>
                                 </div>
                             </div>

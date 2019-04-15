@@ -13,4 +13,8 @@ public interface SellerService {
     void updateStatus(String sellerId, String status);
 
     Seller findBySellerId(String username);
+
+    void findOneForExcel(String id);
+
+    void findOneForOrder(String id);
 }
