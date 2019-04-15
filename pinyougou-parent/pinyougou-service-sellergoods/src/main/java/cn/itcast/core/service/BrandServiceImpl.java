@@ -10,6 +10,7 @@ import entity.PageResult;
 import entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -63,6 +64,10 @@ public class BrandServiceImpl implements BrandService {
             if (brand.getFirstChar()!=null&& !brand.getFirstChar().trim().equals("")){
             criteria.andFirstCharEqualTo(brand.getFirstChar().trim());
             }
+            if (brand.getStatus()!=null&& !brand.getStatus().trim().equals("")){
+            criteria.andStatusEqualTo(brand.getStatus().trim());
+            }
+
         }
         Page<Brand> brands = (Page<Brand>) brandDao.selectByExample(brandQuery);
         return new PageResult(brands.getTotal(),brands.getResult());
@@ -72,5 +77,15 @@ public class BrandServiceImpl implements BrandService {
     public List<Map> selectOptionList() {
 
         return brandDao.selectOptionList();
+    }
+    //修改状态
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+        for (Long id : ids) {
+            Brand brand = new Brand();
+            brand.setId(id);
+            brand.setStatus(status);
+            brandDao.updateByPrimaryKeySelective(brand);
+        }
     }
 }

@@ -44,8 +44,27 @@ public class ItemCatController {
             return new Result(false,"失败");
         }
     }
+
     @RequestMapping("/findAll")
     public List<ItemCat> findAll(){
+
         return itemCatService.findAll();
+    }
+    @RequestMapping("/search")
+    public List<ItemCat> search(@RequestBody ItemCat itemCat){
+
+        return itemCatService.search(itemCat);
+    }
+
+    @RequestMapping("/updateStatus")
+    public Result updateStatus(Long[]ids,String status){
+
+        try {
+            itemCatService.updateStatus(ids,status);
+            return new Result(true, "审核成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "审核失败");
+        }
     }
 }

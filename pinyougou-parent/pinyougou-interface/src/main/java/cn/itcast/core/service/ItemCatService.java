@@ -15,5 +15,9 @@ public interface ItemCatService {
     void update(ItemCat itemCat);
 
 
+    List<ItemCat> search(ItemCat itemCat);
+
+    void updateStatus(Long[] ids, String status);
+
     List<ItemCat> findAll();
 }

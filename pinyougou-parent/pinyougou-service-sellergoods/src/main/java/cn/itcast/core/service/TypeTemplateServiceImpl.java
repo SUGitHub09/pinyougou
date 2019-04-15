@@ -3,8 +3,10 @@ package cn.itcast.core.service;
 import cn.itcast.core.dao.specification.SpecificationDao;
 import cn.itcast.core.dao.specification.SpecificationOptionDao;
 import cn.itcast.core.dao.template.TypeTemplateDao;
+import cn.itcast.core.pojo.specification.Specification;
 import cn.itcast.core.pojo.specification.SpecificationOption;
 import cn.itcast.core.pojo.specification.SpecificationOptionQuery;
+import cn.itcast.core.pojo.specification.SpecificationQuery;
 import cn.itcast.core.pojo.template.TypeTemplate;
 import cn.itcast.core.pojo.template.TypeTemplateQuery;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -37,10 +39,19 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
             List<Map> specList = findBySpecList(template.getId());
             redisTemplate.boundHashOps("specList").put(template.getId(),specList);
         }
-
+        TypeTemplateQuery typeTemplateQuery = new TypeTemplateQuery();
+        TypeTemplateQuery.Criteria criteria = typeTemplateQuery.createCriteria();
+        if (typeTemplate!=null){
+            if (typeTemplate.getName()!=null&& !"".equals(typeTemplate.getName().trim())){
+                criteria.andNameLike("%"+typeTemplate.getName().trim()+"%");
+            }
+            if (typeTemplate.getStatus()!=null&& !typeTemplate.getStatus().trim().equals("")){
+                criteria.andStatusEqualTo(typeTemplate.getStatus().trim());
+            }
+        }
 
         PageHelper.startPage(page,rows);
-         Page page1= (Page) typeTemplateDao.selectByExample(null);
+         Page page1= (Page) typeTemplateDao.selectByExample(typeTemplateQuery);
         return new PageResult(page1.getTotal(),page1.getResult());
     }
 
@@ -79,5 +90,16 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
         }
         return list;
+    }
+
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+
+        for (Long id : ids) {
+            TypeTemplate typeTemplate = new TypeTemplate();
+            typeTemplate.setId(id);
+            typeTemplate.setStatus(status);
+            typeTemplateDao.updateByPrimaryKeySelective(typeTemplate);
+        }
     }
 }

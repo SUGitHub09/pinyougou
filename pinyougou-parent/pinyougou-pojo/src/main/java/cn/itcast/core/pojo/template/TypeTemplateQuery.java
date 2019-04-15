@@ -1,5 +1,7 @@
 package cn.itcast.core.pojo.template;
 
+import cn.itcast.core.pojo.specification.SpecificationQuery;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -451,6 +453,11 @@ public class TypeTemplateQuery {
 
         public Criteria andCustomAttributeItemsNotBetween(String value1, String value2) {
             addCriterion("custom_attribute_items not between", value1, value2, "customAttributeItems");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(String value) {
+            addCriterion("status =", value, "status");
             return (Criteria) this;
         }
     }

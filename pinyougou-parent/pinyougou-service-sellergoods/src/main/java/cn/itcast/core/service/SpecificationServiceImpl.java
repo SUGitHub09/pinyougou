@@ -32,7 +32,10 @@ public class SpecificationServiceImpl implements SpecificationService{
         SpecificationQuery.Criteria criteria = specificationQuery.createCriteria();
         if (specification!=null){
             if (specification.getSpecName()!=null&& !"".equals(specification.getSpecName().trim())){
-                criteria.andSpecNameEqualTo(specification.getSpecName().trim());
+                criteria.andSpecNameLike("%"+specification.getSpecName().trim()+"%");
+            }
+            if (specification.getStatus()!=null&& !specification.getStatus().trim().equals("")){
+                criteria.andStatusEqualTo(specification.getStatus().trim());
             }
         }
         Page<Specification> specifications = (Page<Specification>) specificationDao.selectByExample(specificationQuery);
@@ -92,5 +95,15 @@ public class SpecificationServiceImpl implements SpecificationService{
     @Override
     public List<Map> selectOptionList() {
         return specificationDao.selectOptionList();
+    }
+
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+        for (Long id : ids) {
+            Specification specification = new Specification();
+            specification.setId(id);
+            specification.setStatus(status);
+            specificationDao.updateByPrimaryKeySelective(specification);
+        }
     }
 }

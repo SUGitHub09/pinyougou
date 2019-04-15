@@ -60,6 +60,19 @@ public class SeckillOrder implements Serializable {
      */
     private String receiver;
 
+    public String getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(String sourceType) {
+        this.sourceType = sourceType;
+    }
+
+    /**
+     * 订单来源：1:app端，2：pc端，3：M端，4：微信端，5：手机qq端
+     */
+    private String sourceType;
+
     /**
      * 交易流水
      */

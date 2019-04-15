@@ -243,6 +243,11 @@ public class SpecificationQuery {
             addCriterion("spec_name not between", value1, value2, "specName");
             return (Criteria) this;
         }
+
+        public Criteria andStatusEqualTo(String value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

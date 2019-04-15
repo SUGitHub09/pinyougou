@@ -24,6 +24,19 @@ public class TypeTemplate implements Serializable {
      * 自定义属性
      */
     private String customAttributeItems;
+    /*
+    * 审核状态
+    *
+    * */
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     private static final long serialVersionUID = 1L;
 
@@ -69,18 +82,14 @@ public class TypeTemplate implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", specIds=").append(specIds);
-        sb.append(", brandIds=").append(brandIds);
-        sb.append(", customAttributeItems=").append(customAttributeItems);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "TypeTemplate{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", specIds='" + specIds + '\'' +
+                ", brandIds='" + brandIds + '\'' +
+                ", customAttributeItems='" + customAttributeItems + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 
     @Override

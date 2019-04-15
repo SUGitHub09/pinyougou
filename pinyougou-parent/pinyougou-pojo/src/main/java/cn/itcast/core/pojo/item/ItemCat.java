@@ -23,6 +23,19 @@ public class ItemCat implements Serializable {
      */
     private Long typeId;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    /*
+    * 审核状态
+    *
+    * */
+    private String status;
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -59,17 +72,13 @@ public class ItemCat implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", parentId=").append(parentId);
-        sb.append(", name=").append(name);
-        sb.append(", typeId=").append(typeId);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "ItemCat{" +
+                "id=" + id +
+                ", parentId=" + parentId +
+                ", name='" + name + '\'' +
+                ", typeId=" + typeId +
+                ", status='" + status + '\'' +
+                '}';
     }
 
     @Override

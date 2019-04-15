@@ -313,6 +313,12 @@ public class BrandQuery {
             addCriterion("first_char not between", value1, value2, "firstChar");
             return (Criteria) this;
         }
+        public BrandQuery.Criteria andStatusEqualTo(String value) {
+            addCriterion("status =", value, "status");
+            return (BrandQuery.Criteria) this;
+        }
+
+
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -1,5 +1,7 @@
 package cn.itcast.core.pojo.item;
 
+import cn.itcast.core.pojo.specification.SpecificationQuery;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -361,6 +363,10 @@ public class ItemCatQuery {
 
         public Criteria andTypeIdNotBetween(Long value1, Long value2) {
             addCriterion("type_id not between", value1, value2, "typeId");
+            return (Criteria) this;
+        }
+        public Criteria andStatusEqualTo(String value) {
+            addCriterion("status =", value, "status");
             return (Criteria) this;
         }
     }
