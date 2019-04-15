@@ -4,6 +4,7 @@ import cn.itcast.core.dao.item.ItemCatDao;
 
 import cn.itcast.core.pojo.item.ItemCat;
 import cn.itcast.core.pojo.item.ItemCatQuery;
+import cn.itcast.core.pojo.template.TypeTemplate;
 import com.alibaba.dubbo.config.annotation.Service;
 
 import org.apache.ibatis.jdbc.Null;
@@ -77,6 +78,26 @@ public class ItemCatServiceImpl implements ItemCatService {
     @Override
     public List<ItemCat> findAll() {
         return itemCatDao.selectByExample(null);
+    }
+
+    @Override
+    public void uploadExcelForStore(List<String[]> list) {
+        if (list != null && list.size() > 0) {
+
+
+            for (String[] strings : list) {
+                ItemCat itemCat = new ItemCat();
+
+                itemCat.setId(Long.parseLong(strings[0]));
+                itemCat.setParentId(Long.parseLong(strings[1]));
+                itemCat.setName(strings[2]);
+                itemCat.setTypeId(Long.parseLong(strings[1]));
+                itemCatDao.insertSelective(itemCat);
+
+
+            }
+
+        }
     }
 
 

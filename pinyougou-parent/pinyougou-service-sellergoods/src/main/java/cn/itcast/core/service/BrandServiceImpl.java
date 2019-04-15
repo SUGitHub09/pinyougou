@@ -78,6 +78,7 @@ public class BrandServiceImpl implements BrandService {
 
         return brandDao.selectOptionList();
     }
+
     //修改状态
     @Override
     public void updateStatus(Long[] ids, String status) {
@@ -87,5 +88,25 @@ public class BrandServiceImpl implements BrandService {
             brand.setStatus(status);
             brandDao.updateByPrimaryKeySelective(brand);
         }
+	}
+
+    @Override
+    public void uploadExcelForStore(List<String[]> list) {
+
+        if (list != null && list.size() > 0) {
+
+
+            for (String[] strings : list) {
+                Brand brand = new Brand();
+                brand.setId(Long.parseLong(strings[0]));
+                brand.setName(strings[1]);
+                brand.setFirstChar(strings[2]);
+                brandDao.insertSelective(brand);
+            }
+
+        }
+
+
+
     }
 }

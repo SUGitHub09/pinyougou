@@ -1,5 +1,5 @@
  //控制层 
-app.controller('specificationController' ,function($scope,$controller   ,specificationService){	
+app.controller('specificationController' ,function($scope,$controller  ,specificationService,specificationUploadService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -88,6 +88,7 @@ app.controller('specificationController' ,function($scope,$controller   ,specifi
 	}
 
 
+
     // 显示状态
     $scope.status = ["未审核","审核通过","审核未通过","关闭"];
 
@@ -97,10 +98,20 @@ app.controller('specificationController' ,function($scope,$controller   ,specifi
             if(response.flag){
                 $scope.reloadList();//刷新列表
                 $scope.selectIds = [];
+			}
+		}
+	}
+
+    $scope.uploadFile = function(){
+        // 调用uploadService的方法完成文件的上传
+        specificationUploadService.uploadFile().success(function(response){
+            if(response.flag){
+                alert( response.message);
+
             }else{
                 alert(response.message);
             }
         });
     }
-    
+
 });	

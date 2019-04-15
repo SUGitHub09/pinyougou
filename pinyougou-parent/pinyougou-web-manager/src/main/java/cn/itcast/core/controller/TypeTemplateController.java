@@ -1,5 +1,6 @@
 package cn.itcast.core.controller;
 
+import cn.itcast.common.utils.POIUtils;
 import cn.itcast.core.pojo.template.TypeTemplate;
 import cn.itcast.core.service.TypeTemplateService;
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -8,6 +9,7 @@ import entity.Result;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -55,6 +57,7 @@ public class TypeTemplateController {
         }
     }
 
+
     @RequestMapping("/updateStatus")
     public Result updateStatus(Long[]ids,String status){
 
@@ -64,6 +67,25 @@ public class TypeTemplateController {
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false, "审核失败");
+		}
+	}
+    @RequestMapping("/uploadExcelForStore")
+    public Result uploadExcelForStore(MultipartFile file) {
+
+        try {
+
+            POIUtils poiUtils = new POIUtils();
+
+            List<String[]> list = poiUtils.ParseExcel(file);
+
+            typeTemplateService.uploadExcelForStore(list);
+
+            return new Result(true, "导入成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(true, "导入失败");
+
+
         }
     }
 }

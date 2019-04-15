@@ -20,4 +20,7 @@ public interface ItemCatService {
     void updateStatus(Long[] ids, String status);
 
     List<ItemCat> findAll();
+
+    void uploadExcelForStore(List<String[]> list);
+
 }

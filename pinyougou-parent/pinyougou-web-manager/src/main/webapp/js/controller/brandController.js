@@ -1,5 +1,5 @@
 // 定义控制器:
-app.controller("brandController",function($scope,$controller,$http,brandService){
+app.controller("brandController",function($scope,$controller,$http,brandService,brandUploadService){
 	// AngularJS中的继承:伪继承
 	$controller('baseController',{$scope:$scope});
 	
@@ -90,10 +90,21 @@ app.controller("brandController",function($scope,$controller,$http,brandService)
             if(response.flag){
                 $scope.reloadList();//刷新列表
                 $scope.selectIds = [];
+			}
+		}
+	}
+
+    $scope.uploadFile = function(){
+        // 调用uploadService的方法完成文件的上传
+        brandUploadService.uploadFile().success(function(response){
+            if(response.flag){
+                alert( response.message);
+
             }else{
                 alert(response.message);
             }
         });
     }
+
 	
 });

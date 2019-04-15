@@ -20,7 +20,11 @@ public interface TypeTemplateService {
 
     List<Map> findBySpecList(Long id);
 
+
     void updateStatus(Long[] ids, String status);
 
+
+
+    void uploadExcelForStore(List<String[]> list);
 
 }
