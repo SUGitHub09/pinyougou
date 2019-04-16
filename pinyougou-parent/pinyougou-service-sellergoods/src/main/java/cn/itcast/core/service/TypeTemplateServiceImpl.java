@@ -30,6 +30,7 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
     @Override
     public PageResult search(Integer page, Integer rows, TypeTemplate typeTemplate) {
+        //存入缓存 规格  模板
         List<TypeTemplate> typeTemplates = typeTemplateDao.selectByExample(null);
         for (TypeTemplate template : typeTemplates) {
             JSONArray brandList = JSON.parseArray(template.getBrandIds());
@@ -37,10 +38,22 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
             List<Map> specList = findBySpecList(template.getId());
             redisTemplate.boundHashOps("specList").put(template.getId(),specList);
         }
-
-
+        //条件查询  展示分页
+        TypeTemplateQuery typeTemplateQuery = new TypeTemplateQuery();
+        TypeTemplateQuery.Criteria criteria = typeTemplateQuery.createCriteria();
+        //添加条件查询
+        if (null!=typeTemplate){
+            if (null!=typeTemplate.getStatus()&&!"".equals(typeTemplate.getStatus())){
+                criteria.andStatusEqualTo(typeTemplate.getStatus());
+            }
+            if (null!=typeTemplate.getName()&&!"".equals(typeTemplate.getName().trim())){
+                criteria.andNameLike("%"+typeTemplate.getName().trim()+"%");
+            }
+        }
+        //排序
+        PageHelper.orderBy("id desc");
         PageHelper.startPage(page,rows);
-         Page page1= (Page) typeTemplateDao.selectByExample(null);
+         Page page1= (Page) typeTemplateDao.selectByExample(typeTemplateQuery);
         return new PageResult(page1.getTotal(),page1.getResult());
     }
 

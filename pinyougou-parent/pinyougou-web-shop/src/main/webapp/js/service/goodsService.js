@@ -13,6 +13,7 @@ app.service('goodsService',function($http){
 	this.findOne=function(id){
 		return $http.get('../goods/findOne.do?id='+id);
 	}
+
 	//增加 
 	this.add=function(entity){
 		return  $http.post('../goods/add.do',entity );

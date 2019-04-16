@@ -41,6 +41,14 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public void update(Brand brand) {
+        //获取id  查询 修改之前的状态
+        Long id = brand.getId();
+        Brand brand1 = brandDao.selectByPrimaryKey(id);
+        //判断状态是否改变
+            if (!brand.getStatus().equals(brand1.getStatus())){
+                throw new RuntimeException("不能更改状态");
+            }
+
         brandDao.updateByPrimaryKeySelective(brand);
     }
 
@@ -54,16 +62,25 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public PageResult findsearch(Integer pageNo, Integer pageSize, Brand brand) {
         PageHelper.startPage(pageNo, pageSize);
+        //以id大小排序
+        PageHelper.orderBy("id desc");
         BrandQuery brandQuery = new BrandQuery();
         BrandQuery.Criteria criteria = brandQuery.createCriteria();
-        if (brand!=null){
-            if (brand.getName()!=null&& !"".equals(brand.getName().trim())){
-            criteria.andNameLike("%"+brand.getName().trim()+"%");
-             }
-            if (brand.getFirstChar()!=null&& !brand.getFirstChar().trim().equals("")){
-            criteria.andFirstCharEqualTo(brand.getFirstChar().trim());
+       /* //id 排序
+        brandQuery.setOrderByClause("id desc");*/
+        if(null!=brand){
+            //只要status不为null ,""就添加到条件中;
+            if (brand.getStatus()!=null&&!"".equals(brand.getStatus())){
+                criteria.andStatusEqualTo(brand.getStatus());
+            }
+            if (null != brand.getName() && !"".equals(brand.getName().trim())) {
+                criteria.andNameLike("%" + brand.getName().trim() + "%");
+            }
+            if(null != brand.getFirstChar() && !"".equals(brand.getFirstChar().trim())){
+                criteria.andFirstCharEqualTo(brand.getFirstChar().trim());
             }
         }
+
         Page<Brand> brands = (Page<Brand>) brandDao.selectByExample(brandQuery);
         return new PageResult(brands.getTotal(),brands.getResult());
     }

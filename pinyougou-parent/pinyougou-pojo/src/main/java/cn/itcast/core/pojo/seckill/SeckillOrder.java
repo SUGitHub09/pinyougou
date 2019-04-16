@@ -1,5 +1,9 @@
 package cn.itcast.core.pojo.seckill;
 
+
+
+
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -64,6 +68,15 @@ public class SeckillOrder implements Serializable {
      * 交易流水
      */
     private String transactionId;
+   private String id1;
+
+    public String getId1() {
+        return id1;
+    }
+
+    public void setId1(String id1) {
+        this.id1 = id1;
+    }
 
     private static final long serialVersionUID = 1L;
 

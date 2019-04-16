@@ -14,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/typeTemplate")
+@SuppressWarnings("all")
 public class TypeTemplateController {
     @Reference
     private TypeTemplateService typeTemplateService;

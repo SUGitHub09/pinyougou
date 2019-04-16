@@ -2,8 +2,7 @@ package cn.itcast.core.service;
 
 import cn.itcast.core.dao.specification.SpecificationDao;
 import cn.itcast.core.dao.specification.SpecificationOptionDao;
-import cn.itcast.core.pojo.good.Brand;
-import cn.itcast.core.pojo.good.BrandQuery;
+
 import cn.itcast.core.pojo.specification.Specification;
 import cn.itcast.core.pojo.specification.SpecificationOption;
 import cn.itcast.core.pojo.specification.SpecificationOptionQuery;
@@ -30,11 +29,19 @@ public class SpecificationServiceImpl implements SpecificationService{
         PageHelper.startPage(page, rows);
         SpecificationQuery specificationQuery = new SpecificationQuery();
         SpecificationQuery.Criteria criteria = specificationQuery.createCriteria();
+        //排序由大到小
+        PageHelper.orderBy("id desc");
+        //只要status不为null ,""就添加到条件中;
+
         if (specification!=null){
+            if (specification.getStatus()!=null&&!"".equals(specification.getStatus())){
+                criteria.andStatusEqualTo(specification.getStatus());
+            }
             if (specification.getSpecName()!=null&& !"".equals(specification.getSpecName().trim())){
-                criteria.andSpecNameEqualTo(specification.getSpecName().trim());
+                criteria.andSpecNameLike("%"+specification.getSpecName().trim()+"%");
             }
         }
+
         Page<Specification> specifications = (Page<Specification>) specificationDao.selectByExample(specificationQuery);
         return new PageResult(specifications.getTotal(),specifications.getResult());
     }
@@ -42,10 +49,18 @@ public class SpecificationServiceImpl implements SpecificationService{
     @Override
     public void add(SpecificationVo specificationvo) {
         specificationDao.insertSelective(specificationvo.getSpecification());
+        //获取规格状态
+        String specName = specificationvo.getSpecification().getSpecName();
+        SpecificationQuery specificationQuery = new SpecificationQuery();
+        specificationQuery.createCriteria().andSpecNameEqualTo(specName);
+        List<Specification> specifications = specificationDao.selectByExample(specificationQuery);
+        Specification specification = specifications.get(0);
+        Long id = specification.getId();
+
         if(specificationvo.getSpecificationOptionList()!=null){
             List<SpecificationOption> specificationOptions = specificationvo.getSpecificationOptionList();
             for (SpecificationOption specificationOption : specificationOptions) {
-                specificationOption.setSpecId(specificationvo.getSpecification().getId());
+                specificationOption.setSpecId(id);
                 specificationOptionDao.insertSelective(specificationOption);
             }
         }

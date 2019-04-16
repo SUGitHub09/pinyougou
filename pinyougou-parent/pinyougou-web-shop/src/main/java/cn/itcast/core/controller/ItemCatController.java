@@ -13,9 +13,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/itemCat")
+@SuppressWarnings("all")
 public class ItemCatController {
     @Reference
     private ItemCatService itemCatService;
+
     @RequestMapping("findByParentId")
     public List<ItemCat> findByParentId(Long parentId){
        return itemCatService.findByParentId(parentId);
@@ -38,6 +40,17 @@ public class ItemCatController {
     public Result update(@RequestBody ItemCat itemCat){
         try {
             itemCatService.update(itemCat);
+            return new Result(true,"成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,"失败");
+        }
+    }
+    //删除功能
+    @RequestMapping("/delete")
+    public Result dele(Long[] ids){
+        try {
+            itemCatService.dele(ids);
             return new Result(true,"成功");
         } catch (Exception e) {
             e.printStackTrace();

@@ -15,11 +15,13 @@ import vo.GoodsVo;
 
 @RestController
 @RequestMapping("/goods")
+@SuppressWarnings("all")
 public class GoodsController {
     @Reference
     private GoodsService goodsService;
     @RequestMapping("/add")
     public Result add(@RequestBody GoodsVo goodsVo){
+
         try {
             String name = SecurityContextHolder.getContext().getAuthentication().getName();
             goodsVo.getGoods().setSellerId(name);

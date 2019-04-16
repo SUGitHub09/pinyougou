@@ -129,6 +129,7 @@ public class BrandQuery {
             return (Criteria) this;
         }
 
+
         public Criteria andIdNotEqualTo(Long value) {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
@@ -311,6 +312,10 @@ public class BrandQuery {
 
         public Criteria andFirstCharNotBetween(String value1, String value2) {
             addCriterion("first_char not between", value1, value2, "firstChar");
+            return (Criteria) this;
+        }
+        public Criteria andStatusEqualTo(String value) {
+            addCriterion("status =", value, "status");
             return (Criteria) this;
         }
     }

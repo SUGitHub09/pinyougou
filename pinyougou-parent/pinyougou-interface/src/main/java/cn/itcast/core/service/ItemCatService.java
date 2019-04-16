@@ -16,4 +16,6 @@ public interface ItemCatService {
 
 
     List<ItemCat> findAll();
+
+    void dele(Long[] ids);
 }

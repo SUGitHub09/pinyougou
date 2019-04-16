@@ -119,6 +119,7 @@ public class GoodsServiceImpl implements GoodsService {
         PageHelper.startPage(page, rows);
         GoodsQuery goodsQuery = new GoodsQuery();
         GoodsQuery.Criteria criteria = goodsQuery.createCriteria();
+        criteria.andSellerIdEqualTo(goods.getSellerId());
             if (goods.getAuditStatus()!=null&&!"".equals(goods.getAuditStatus())){
                criteria.andAuditStatusEqualTo(goods.getAuditStatus()    );
             }if (goods.getGoodsName()!=null&&!"".equals(goods.getGoodsName().trim())){

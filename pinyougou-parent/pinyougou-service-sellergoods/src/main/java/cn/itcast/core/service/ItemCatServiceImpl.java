@@ -50,5 +50,10 @@ public class ItemCatServiceImpl implements ItemCatService {
         return itemCatDao.selectByExample(null);
     }
 
-
+    @Override
+    public void dele(Long[] ids) {
+        for (Long id : ids) {
+            itemCatDao.deleteByPrimaryKey(id);
+        }
+    }
 }
