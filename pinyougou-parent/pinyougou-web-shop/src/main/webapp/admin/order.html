@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>订单管理</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- 引入angular的js -->
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+    <!-- 引入分页相关的JS和CSS -->
+    <script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
+    <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+
+    <script type="text/javascript" src="../js/base_pagination.js"></script>
+    <script type="text/javascript" src="../js/controller/baseController.js"></script>
+    <script type="text/javascript" src="../js/controller/orderController.js"></script>
+    <script type="text/javascript" src="../js/service/orderService.js"></script>
+
+</head>
+
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="orderController" >
+<!-- .box-body -->
+
+<div class="box-header with-border">
+    <h3 class="box-title">订单管理</h3>
+</div>
+
+<div class="box-body">
+
+    <!-- 数据表格 -->
+    <div class="table-box">
+        <!--工具栏-->
+        <div class="pull-left">
+            <div class="form-group form-inline">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default" ng-click="updateStatus('3')" title="点击发货该订单" ><i class="fa fa-check"></i> 发货</button>
+                    <button type="button" class="btn btn-default" title="屏蔽" onclick='confirm("你确认要屏蔽吗？")'><i class="fa fa-ban"></i> 屏蔽</button>
+                    <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-tools pull-right">
+            <div class="has-feedback">
+                状态：<select ng-model="searchEntity.status">
+                <option value="">全部</option>
+                <option value="1">未付款</option>
+                <option value="2">已付款，未发货</option>
+                <option value="3">已付款，已发货</option>
+                <option value="4">交易成功</option>
+                <option value="5">交易关闭</option>
+                <option value="6">待评价</option>
+            </select>
+
+                时间范围：<select ng-model="searchEntity.timeStatus">
+                <option value="">总订单</option>
+                <option value="1">日订单</option>
+                <option value="2">周订单</option>
+                <option value="3">月订单</option>
+            </select>
+                订单日期：<input ng-model="searchEntity.createTime"/>
+                <button class="btn btn-default" ng-click="reloadList()">查询</button>
+            </div>
+        </div>
+        <!--工具栏/-->
+
+        <!--数据列表-->
+        <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+            <thead>
+            <tr>
+                <th class="" style="padding-right:0px">
+                    <input id="selall" type="checkbox" class="icheckbox_square-blue">
+                </th>
+                <th class="sorting">商品名称</th>
+                <th class="sorting">商品价格</th>
+                <th class="sorting">商品数量</th>
+                <th class="sorting">订单实付金额</th>
+                <th class="sorting">订单来源</th>
+                <th class="sorting">创建时间</th>
+                <th class="sorting">状态</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="order in list">
+                <td><input ng-click="updateSelection($event,order.orderIdStr)" type="checkbox"></td>
+                <td colspan="4"  style="Padding: 0px">
+                    <table class="table table-bordered table-striped table-hover dataTable">
+                        <tr class="row"  ng-repeat="item in order.orderItemList">
+                            <td class="col-md-4">{{item.title}}</td>
+                            <td class="col-md-4">{{item.price}}</td>
+                            <td class="col-md-4">{{item.num}}</td>
+                            <td class="col-md-4">{{item.totalFee}}</td>
+                            <!--<td>asdsfas</td>-->
+                            <!--<td>fvdgh</td>-->
+                            <!--<td>gvdf</td>-->
+                        </tr>
+                    </table>
+                </td>
+                <td>{{sourceType[order.sourceType]}}</td>
+                <td>{{order.createTime}}</td>
+                <td>
+					<span>
+						 {{status[order.status]}}
+					</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!--数据列表/-->
+        <!-- 分页 -->
+        <tm-pagination conf="paginationConf"></tm-pagination>
+    </div>
+    <!-- 数据表格 /-->
+
+
+</div>
+<!-- /.box-body -->
+
+</body>
+
+</html>
