@@ -116,6 +116,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public PageResult search(Integer page, Integer rows, Goods goods) {
+        if (goods.getSellerId()==null){
+            goods.setSellerId("qiandu");
+        }
         PageHelper.startPage(page, rows);
         GoodsQuery goodsQuery = new GoodsQuery();
         GoodsQuery.Criteria criteria = goodsQuery.createCriteria();

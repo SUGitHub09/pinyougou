@@ -131,7 +131,9 @@ public class seckillGoodsServiceImpl implements seckillGoodsService {
                 SeckillGoodsVo seckillGoodsVo = new SeckillGoodsVo();
 
                 seckillGoodsVo.setId(goods.getId());
-                seckillGoodsVo.setGoodsName(goodsDao.selectByPrimaryKey(goods.getGoodsId()).getGoodsName());
+                if (goodsDao.selectByPrimaryKey(goods.getGoodsId()).getGoodsName()!=null){
+                    seckillGoodsVo.setGoodsName(goodsDao.selectByPrimaryKey(goods.getGoodsId()).getGoodsName());
+                }
                 seckillGoodsVo.setTitle(goods.getTitle());
                 seckillGoodsVo.setPrice(goods.getPrice());
                 seckillGoodsVo.setCostPrice(goods.getCostPrice());

@@ -20,6 +20,7 @@ public interface OrderService {
 
 
     void delete(Long[] ids);
+    void delete(String orderIdstr);
 
 
 }

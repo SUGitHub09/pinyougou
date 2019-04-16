@@ -319,5 +319,9 @@ public class OrderServiceImpl implements OrderService {
             orderDao.deleteByPrimaryKey(id);
         }
     }
+    @Override
+    public void delete(String orderIdStr) {
+        orderDao.deleteByPrimaryKey(Long.parseLong(orderIdStr));
+    }
 
 }

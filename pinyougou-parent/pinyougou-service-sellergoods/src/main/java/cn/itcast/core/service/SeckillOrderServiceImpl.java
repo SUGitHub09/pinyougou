@@ -17,8 +17,8 @@ import java.util.List;
 
 @Service
 public class SeckillOrderServiceImpl implements SeckillOrderService {
-@Autowired
-private SeckillOrderDao seckillOrderDao;
+    @Autowired
+    private SeckillOrderDao seckillOrderDao;
     @Override
     public SeckillOrder findOne(Long id) {
         SeckillOrder seckillOrder = seckillOrderDao.selectByPrimaryKey(id);
@@ -66,7 +66,7 @@ private SeckillOrderDao seckillOrderDao;
                 criteria.andStatusEqualTo(searchOrderParam.getStatus());
             }
 
-            }
+        }
 
         Page<SeckillOrder>page1= (Page<SeckillOrder>) seckillOrderDao.selectByExample(seckillOrderQuery);
         List<SeckillOrder> page1Result = page1.getResult();
@@ -79,7 +79,7 @@ private SeckillOrderDao seckillOrderDao;
 
     @Override
     public void update(SeckillOrder seckillOrder) {
-       seckillOrderDao.updateByPrimaryKeySelective(seckillOrder);
+        seckillOrderDao.updateByPrimaryKeySelective(seckillOrder);
     }
 
     @Override

@@ -102,7 +102,7 @@ public class SeckillOrdersServiceImpl implements SeckillOrdersService {
              * 订单来源：1:app端，2：pc端，3：M端，4：微信端，5：手机qq端
              */
             //private String sourceType;
-            orderVo1.setSourceType(order.getSourceType());
+            //orderVo1.setSourceType(order.getSourceType());
             /**
              * 订单创建时间
              */
@@ -111,6 +111,7 @@ public class SeckillOrdersServiceImpl implements SeckillOrdersService {
             orderVo1.setPayment(order.getMoney());
             //private String status;
             orderVo1.setStatus(order.getStatus());
+            orderVo1.setSourceType("2");
             orderVoList.add(orderVo1);
         }
         return new PageResult(page1.getTotal(),orderVoList);
