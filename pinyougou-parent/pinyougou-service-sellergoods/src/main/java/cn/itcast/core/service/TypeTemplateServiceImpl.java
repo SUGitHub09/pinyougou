@@ -3,8 +3,14 @@ package cn.itcast.core.service;
 import cn.itcast.core.dao.specification.SpecificationDao;
 import cn.itcast.core.dao.specification.SpecificationOptionDao;
 import cn.itcast.core.dao.template.TypeTemplateDao;
+
+import cn.itcast.core.pojo.specification.Specification;
+
+import cn.itcast.core.pojo.good.Brand;
+
 import cn.itcast.core.pojo.specification.SpecificationOption;
 import cn.itcast.core.pojo.specification.SpecificationOptionQuery;
+import cn.itcast.core.pojo.specification.SpecificationQuery;
 import cn.itcast.core.pojo.template.TypeTemplate;
 import cn.itcast.core.pojo.template.TypeTemplateQuery;
 import com.alibaba.dubbo.config.annotation.Service;
@@ -38,13 +44,14 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
             List<Map> specList = findBySpecList(template.getId());
             redisTemplate.boundHashOps("specList").put(template.getId(),specList);
         }
+
         //条件查询  展示分页
         TypeTemplateQuery typeTemplateQuery = new TypeTemplateQuery();
         TypeTemplateQuery.Criteria criteria = typeTemplateQuery.createCriteria();
         //添加条件查询
         if (null!=typeTemplate){
-            if (null!=typeTemplate.getStatus()&&!"".equals(typeTemplate.getStatus())){
-                criteria.andStatusEqualTo(typeTemplate.getStatus());
+            if (typeTemplate.getStatus()!=null&& !typeTemplate.getStatus().trim().equals("")){
+                criteria.andStatusEqualTo(typeTemplate.getStatus().trim());
             }
             if (null!=typeTemplate.getName()&&!"".equals(typeTemplate.getName().trim())){
                 criteria.andNameLike("%"+typeTemplate.getName().trim()+"%");
@@ -52,6 +59,8 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
         }
         //排序
         PageHelper.orderBy("id desc");
+
+
         PageHelper.startPage(page,rows);
          Page page1= (Page) typeTemplateDao.selectByExample(typeTemplateQuery);
         return new PageResult(page1.getTotal(),page1.getResult());
@@ -92,5 +101,37 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 
         }
         return list;
+    }
+
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+
+        for (Long id : ids) {
+            TypeTemplate typeTemplate = new TypeTemplate();
+            typeTemplate.setId(id);
+            typeTemplate.setStatus(status);
+            typeTemplateDao.updateByPrimaryKeySelective(typeTemplate);
+		}
+	}
+	
+	@Override
+    public void uploadExcelForStore(List<String[]> list) {
+        if (list != null && list.size() > 0) {
+
+
+            for (String[] strings : list) {
+                TypeTemplate typeTemplate = new TypeTemplate();
+
+                typeTemplate.setId(Long.parseLong(strings[0]));
+                typeTemplate.setName(strings[1]);
+                typeTemplate.setSpecIds(strings[2]);
+                typeTemplate.setBrandIds(strings[3]);
+                typeTemplate.setCustomAttributeItems(strings[4]);
+                typeTemplateDao.insertSelective(typeTemplate);
+
+            }
+
+
+        }
     }
 }

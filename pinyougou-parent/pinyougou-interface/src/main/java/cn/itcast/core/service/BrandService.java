@@ -28,4 +28,10 @@ public interface BrandService {
     PageResult findsearch(Integer pageNo, Integer pageSize, Brand brand);
 
     List<Map> selectOptionList();
+
+
+    void updateStatus(Long[] ids, String status);
+
+    void uploadExcelForStore(List<String[]> list);
+
 }

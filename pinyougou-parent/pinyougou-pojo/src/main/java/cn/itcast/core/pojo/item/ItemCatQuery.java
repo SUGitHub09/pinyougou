@@ -1,5 +1,7 @@
 package cn.itcast.core.pojo.item;
 
+import cn.itcast.core.pojo.specification.SpecificationQuery;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -364,6 +366,7 @@ public class ItemCatQuery {
             return (Criteria) this;
         }
 
+
         public Criteria andStatusIsNull() {
             addCriterion("status is null");
             return (Criteria) this;
@@ -374,10 +377,12 @@ public class ItemCatQuery {
             return (Criteria) this;
         }
 
+
         public Criteria andStatusEqualTo(String value) {
             addCriterion("status =", value, "status");
             return (Criteria) this;
         }
+
 
         public Criteria andStatusNotEqualTo(String value) {
             addCriterion("status <>", value, "status");
@@ -433,6 +438,7 @@ public class ItemCatQuery {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
+
     }
 
     public static class Criteria extends GeneratedCriteria {

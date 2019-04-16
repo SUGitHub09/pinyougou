@@ -13,6 +13,15 @@ app.service('sellerService',function($http){
 	this.findOne=function(id){
 		return $http.get('../seller/findOne.do?id='+id);
 	}
+
+    this.findOneForOrder=function(id){
+        return $http.get('../seller/findOneForOrder.do?id='+id);
+    }
+
+    this.findOneForExcel=function(id){
+        return $http.get('../seller/findOneForExcel.do?id='+id);
+    }
+
 	//增加 
 	this.add=function(entity){
 		return  $http.post('../seller/add.do',entity );

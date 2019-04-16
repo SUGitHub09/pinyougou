@@ -244,6 +244,7 @@ public class SpecificationQuery {
             return (Criteria) this;
         }
 
+
         public Criteria andStatusIsNull() {
             addCriterion("status is null");
             return (Criteria) this;
@@ -258,6 +259,7 @@ public class SpecificationQuery {
             addCriterion("status =", value, "status");
             return (Criteria) this;
         }
+
 
         public Criteria andStatusNotEqualTo(String value) {
             addCriterion("status <>", value, "status");
@@ -313,6 +315,7 @@ public class SpecificationQuery {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
+
     }
 
     public static class Criteria extends GeneratedCriteria {

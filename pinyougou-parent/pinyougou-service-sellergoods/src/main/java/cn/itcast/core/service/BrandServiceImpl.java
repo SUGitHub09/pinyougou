@@ -10,6 +10,7 @@ import entity.PageResult;
 import entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -41,13 +42,6 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public void update(Brand brand) {
-        //获取id  查询 修改之前的状态
-        Long id = brand.getId();
-        Brand brand1 = brandDao.selectByPrimaryKey(id);
-        //判断状态是否改变
-            if (!brand.getStatus().equals(brand1.getStatus())){
-                throw new RuntimeException("不能更改状态");
-            }
 
         brandDao.updateByPrimaryKeySelective(brand);
     }
@@ -69,16 +63,17 @@ public class BrandServiceImpl implements BrandService {
        /* //id 排序
         brandQuery.setOrderByClause("id desc");*/
         if(null!=brand){
-            //只要status不为null ,""就添加到条件中;
-            if (brand.getStatus()!=null&&!"".equals(brand.getStatus())){
-                criteria.andStatusEqualTo(brand.getStatus());
-            }
+
             if (null != brand.getName() && !"".equals(brand.getName().trim())) {
                 criteria.andNameLike("%" + brand.getName().trim() + "%");
             }
             if(null != brand.getFirstChar() && !"".equals(brand.getFirstChar().trim())){
                 criteria.andFirstCharEqualTo(brand.getFirstChar().trim());
             }
+            if (brand.getStatus()!=null&& !brand.getStatus().trim().equals("")){
+            criteria.andStatusEqualTo(brand.getStatus().trim());
+            }
+
         }
 
         Page<Brand> brands = (Page<Brand>) brandDao.selectByExample(brandQuery);
@@ -89,5 +84,36 @@ public class BrandServiceImpl implements BrandService {
     public List<Map> selectOptionList() {
 
         return brandDao.selectOptionList();
+    }
+
+    //修改状态
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+        for (Long id : ids) {
+            Brand brand = new Brand();
+            brand.setId(id);
+            brand.setStatus(status);
+            brandDao.updateByPrimaryKeySelective(brand);
+        }
+	}
+
+    @Override
+    public void uploadExcelForStore(List<String[]> list) {
+
+        if (list != null && list.size() > 0) {
+
+
+            for (String[] strings : list) {
+                Brand brand = new Brand();
+                brand.setId(Long.parseLong(strings[0]));
+                brand.setName(strings[1]);
+                brand.setFirstChar(strings[2]);
+                brandDao.insertSelective(brand);
+            }
+
+        }
+
+
+
     }
 }

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ECharts</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- 引入angular的js -->
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+    <!-- 引入分页相关的JS和CSS -->
+    <script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
+    <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+
+    <script type="text/javascript" src="../js/base_pagination.js"></script>
+    <script type="text/javascript" src="../js/controller/baseController.js"></script>
+
+</head>
+<body class="hold-transition skin-red sidebar-mini">
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="height:400px"></div>
+    <!-- ECharts单文件引入 -->
+    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+    <script type="text/javascript">
+            //var tname = ['Chrome','Firefox','Safari','IE9+','IE8-'];
+            //var tname = document.getElementById("names").value;
+            //alert(tname)
+            //var tname;
+            // 路径配置
+            require.config({
+                paths: {
+                    echarts: 'http://echarts.baidu.com/build/dist'
+                }
+            });
+
+            // 使用
+            require(
+                [
+                    'echarts',
+                    'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
+                ],
+                function (ec) {
+                    // 基于准备好的dom，初始化echarts图表
+                    var myChart = ec.init(document.getElementById('main'));
+
+                    $.ajax({
+                        url:'../statistics/findSeller.do',
+                        type:'post',
+                        async: true,
+                        dataType:'json',
+                        success:function (result){
+
+                           var tname = result.names;
+                           var tdate = result.dates;
+                           var data = result.series;
+                           var moneys = result.moneys;
+                           //alert(tname);
+                           //alert(tdate.length);
+
+
+
+                    var idx = 1;
+                    var option = {
+                        xAxis: {
+                            type: 'category',
+                            data: tdate
+                        },
+                        yAxis: {
+                            type: 'value'
+                        },
+                        series: [{
+                            data: moneys,
+                            type: 'line',
+                            smooth: true
+                        }]
+                    };
+
+
+
+                            // 为echarts对象加载数据
+                    myChart.setOption(option);
+                        }});
+                }
+            );
+
+    </script>
+</body>

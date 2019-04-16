@@ -19,4 +19,10 @@ public interface SpecificationService {
     void delete(Long[] ids);
 
     List<Map> selectOptionList();
+
+
+    void updateStatus(Long[] ids, String status);
+
+    void uploadExcelForStore(List<String[]> list);
+
 }

@@ -13,6 +13,7 @@ public class Specification implements Serializable {
      */
     private String specName;
 
+
     private String status;
 
     private static final long serialVersionUID = 1L;
@@ -43,6 +44,7 @@ public class Specification implements Serializable {
 
     @Override
     public String toString() {
+
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" [");
@@ -80,5 +82,6 @@ public class Specification implements Serializable {
         result = prime * result + ((getSpecName() == null) ? 0 : getSpecName().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         return result;
+
     }
 }

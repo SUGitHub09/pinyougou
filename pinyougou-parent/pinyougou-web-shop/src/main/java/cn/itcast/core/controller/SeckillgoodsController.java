@@ -1,7 +1,8 @@
 package cn.itcast.core.controller;
 
 import cn.itcast.core.pojo.seckill.SeckillGoods;
-import cn.itcast.core.service.SeckillgoodsService;
+
+import cn.itcast.core.service.seckillGoodsService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import entity.PageResult;
 import entity.Result;
@@ -15,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SeckillgoodsController {
     @Reference
-    private SeckillgoodsService seckillgoodsService;
+  private seckillGoodsService seckillGoodsService;
     @RequestMapping("/findOne")
     public SeckillGoods findOne(Long id){
-        SeckillGoods seckillGoods=seckillgoodsService.findOne(id);
+        SeckillGoods seckillGoods=seckillGoodsService.findOne(id);
         return seckillGoods;
     }
     @RequestMapping("/add")
@@ -27,7 +28,7 @@ public class SeckillgoodsController {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         seckillGoods.setSellerId(name);
         try {
-            seckillgoodsService.add(seckillGoods);
+            seckillGoodsService.add(seckillGoods);
             return new Result(true,"添加成功");
         }catch (RuntimeException e){
             return new Result(false,e.getMessage());
@@ -40,7 +41,7 @@ public class SeckillgoodsController {
     @RequestMapping("/update")
     public Result update(@RequestBody SeckillGoods seckillGoods){
         try {
-            seckillgoodsService.update(seckillGoods);
+            seckillGoodsService.update(seckillGoods);
             return new Result(true,"更新成功");
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,7 +51,7 @@ public class SeckillgoodsController {
     @RequestMapping("/delete")
     public Result delete(Long[]ids){
         try {
-            seckillgoodsService.dele(ids);
+            seckillGoodsService.dele(ids);
             return new Result(true,"删除成功");
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,7 +62,7 @@ public class SeckillgoodsController {
     public PageResult search(Integer page, Integer rows, @RequestBody SeckillGoods seckillGoods) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         seckillGoods.setSellerId(name);
-        return seckillgoodsService.search(page,rows,seckillGoods);
+        return seckillGoodsService.search1(page,rows,seckillGoods);
 
     }
     }

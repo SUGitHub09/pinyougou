@@ -22,14 +22,11 @@ public class ItemCat implements Serializable {
      * 类型id
      */
     private Long typeId;
-
     /**
      * 状态
      */
     private String status;
-
     private static final long serialVersionUID = 1L;
-
     public Long getId() {
         return id;
     }
@@ -72,6 +69,7 @@ public class ItemCat implements Serializable {
 
     @Override
     public String toString() {
+
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" [");

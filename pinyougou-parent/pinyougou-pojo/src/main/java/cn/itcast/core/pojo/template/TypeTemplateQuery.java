@@ -1,5 +1,7 @@
 package cn.itcast.core.pojo.template;
 
+import cn.itcast.core.pojo.specification.SpecificationQuery;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -454,6 +456,7 @@ public class TypeTemplateQuery {
             return (Criteria) this;
         }
 
+
         public Criteria andStatusIsNull() {
             addCriterion("status is null");
             return (Criteria) this;
@@ -463,6 +466,7 @@ public class TypeTemplateQuery {
             addCriterion("status is not null");
             return (Criteria) this;
         }
+
 
         public Criteria andStatusEqualTo(String value) {
             addCriterion("status =", value, "status");

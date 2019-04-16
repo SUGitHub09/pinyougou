@@ -82,6 +82,7 @@ public class TypeTemplate implements Serializable {
 
     @Override
     public String toString() {
+
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" [");
@@ -95,6 +96,9 @@ public class TypeTemplate implements Serializable {
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
+
+
+
     }
 
     @Override

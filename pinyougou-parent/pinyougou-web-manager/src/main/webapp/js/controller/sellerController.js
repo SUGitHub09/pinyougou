@@ -1,4 +1,4 @@
- //控制层 
+ //控制层
 app.controller('sellerController' ,function($scope,$controller   ,sellerService){	
 	
 	$controller('baseController',{$scope:$scope});//继承
@@ -30,7 +30,32 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 			}
 		);				
 	}
-	
+
+    //查询
+    $scope.findOneForExcel=function(id) {
+        sellerService.findOneForExcel(id).success(
+            function (response) {
+                if (response.flag == true) {
+                    alert(response.message)
+                } else {
+                    alert(response.message)
+
+                }
+            }
+        );
+    }
+        $scope.findOneForOrder=function(id){
+        sellerService.findOneForOrder(id).success(
+            function(response){
+                if (response.flag==true) {
+					alert(response.message)
+                }else {
+                    alert(response.message)
+
+                }
+            }
+        );
+    }
 	//保存 
 	$scope.save=function(){				
 		var serviceObject;//服务层对象  				
@@ -87,4 +112,4 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 			}
 		});
 	}
-});	
+});

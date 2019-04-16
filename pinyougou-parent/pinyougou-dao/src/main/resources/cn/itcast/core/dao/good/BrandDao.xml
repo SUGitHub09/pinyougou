@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="first_char" property="firstChar" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,7 +67,9 @@
   </sql>
   <sql id="Base_Column_List" >
     <if test="fields == null" >
-      id, name, first_char, status
+
+      id, name, first_char,status
+
     </if>
     <if test="fields != null" >
       ${fields}
@@ -187,6 +190,7 @@
       <if test="status != null" >
         status = #{status,jdbcType=VARCHAR},
       </if>
+
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>

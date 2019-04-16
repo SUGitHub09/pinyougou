@@ -34,11 +34,13 @@ public class SpecificationServiceImpl implements SpecificationService{
         //只要status不为null ,""就添加到条件中;
 
         if (specification!=null){
-            if (specification.getStatus()!=null&&!"".equals(specification.getStatus())){
-                criteria.andStatusEqualTo(specification.getStatus());
-            }
             if (specification.getSpecName()!=null&& !"".equals(specification.getSpecName().trim())){
                 criteria.andSpecNameLike("%"+specification.getSpecName().trim()+"%");
+
+            }
+            if (specification.getStatus()!=null&& !specification.getStatus().trim().equals("")){
+                criteria.andStatusEqualTo(specification.getStatus().trim());
+
             }
         }
 
@@ -107,5 +109,42 @@ public class SpecificationServiceImpl implements SpecificationService{
     @Override
     public List<Map> selectOptionList() {
         return specificationDao.selectOptionList();
+    }
+
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+        for (Long id : ids) {
+            Specification specification = new Specification();
+            specification.setId(id);
+            specification.setStatus(status);
+            specificationDao.updateByPrimaryKeySelective(specification);
+        }
+	}
+	
+	@Override
+    public void uploadExcelForStore(List<String[]> list) {
+
+        if (list != null && list.size() > 0) {
+
+            for (String[] strings : list) {
+
+                Specification specification = new Specification();
+                specification.setId(Long.parseLong(strings[0]));
+                specification.setSpecName(strings[1]);
+
+                specificationDao.insertSelective(specification);
+
+
+
+            }
+
+
+
+
+
+        }
+
+
+
     }
 }

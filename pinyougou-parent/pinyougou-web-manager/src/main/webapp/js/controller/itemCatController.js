@@ -1,5 +1,5 @@
  //控制层 
-app.controller('itemCatController' ,function($scope,$controller   ,itemCatService){	
+app.controller('itemCatController' ,function($scope,$controller ,itemCatService,itemCatUploadService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -69,11 +69,10 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 	$scope.searchEntity={};//定义搜索对象 
 	
 	//搜索
-	$scope.search=function(page,rows){			
-		itemCatService.search(page,rows,$scope.searchEntity).success(
+	$scope.search=function(){
+		itemCatService.search($scope.searchEntity).success(
 			function(response){
-				$scope.list=response.rows;	
-				$scope.paginationConf.totalItems=response.total;//更新总记录数
+                $scope.list=response;
 			}			
 		);
 	}
@@ -110,9 +109,34 @@ app.controller('itemCatController' ,function($scope,$controller   ,itemCatServic
 		
 		$scope.findByParentId(p_entity.id);
 	}
-	
-	
-	
+
+
+
+    // 显示状态
+    $scope.status = ["未审核","审核通过","审核未通过","关闭"];
+
+    // 审核的方法:
+    $scope.updateStatus = function(status){
+        itemCatService.updateStatus($scope.selectIds,status).success(function(response){
+            if(response.flag){
+                $scope.reloadList();//刷新列表
+                $scope.selectIds = [];
+			}
+		});
+	}
+
+    $scope.uploadFile = function(){
+        // 调用uploadService的方法完成文件的上传
+        itemCatUploadService.uploadFile().success(function(response){
+            if(response.flag){
+                alert( response.message);
+
+            }else{
+                alert(response.message);
+            }
+        });
+    }
+
 	
 	
 	

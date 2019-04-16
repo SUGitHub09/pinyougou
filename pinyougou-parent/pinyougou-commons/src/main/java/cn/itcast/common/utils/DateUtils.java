@@ -139,7 +139,7 @@ public class DateUtils {
 		dates[1]=lastDay;
 		return dates;
 	}
-	//当天
+
 	public static String[] getDayStartAndEndTimePointStr(Date day){
 		String[] dayStrs = new String[2];
 		String dayStr = formatDateToStr(day);
@@ -184,5 +184,27 @@ public class DateUtils {
         }
         return dayList;
 	}
+
+	// 获得当天0点时间
+	public static Date getTimesmorning(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return cal.getTime();
+	}
+	// 获得当天24点时间
+	public static Date getTimesnight(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.HOUR_OF_DAY, 24);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return cal.getTime();
+	}
+
 	
 }

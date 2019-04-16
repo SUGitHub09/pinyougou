@@ -21,7 +21,8 @@
     <script type="text/javascript" src="../js/controller/baseController.js"></script>
     <script type="text/javascript" src="../js/controller/itemCatController.js"></script>
     <script type="text/javascript" src="../js/service/itemCatService.js"></script>
-    
+    <script type="text/javascript" src="../js/service/itemCatUploadService.js"></script>
+
 </head>
 
 <body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="itemCatController" ng-init="findByParentId(0)">
@@ -55,6 +56,8 @@
                                         <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ng-click="entity={}" ><i class="fa fa-file-o"></i> 新建</button>
                                         <button type="button" class="btn btn-default" title="删除" ><i class="fa fa-trash-o"></i> 删除</button>
                                         <button type="button" class="btn btn-default" title="刷新" ><i class="fa fa-check"></i> 刷新</button>
+										<button type="button" class="btn btn-default" title="从excel导入数据" ng-click="uploadFile()"><i class="fa fa-refresh"></i> 从excel导入数据</button>
+										<input type="file" id="file" />
                                        
                                     </div>
                                 </div>
@@ -96,11 +99,10 @@
 						
                         </div>
                         <!-- 数据表格 /-->
-                        
-                        
-                        
-                        
+
                      </div>
+
+
                     <!-- /.box-body -->
               
                                 

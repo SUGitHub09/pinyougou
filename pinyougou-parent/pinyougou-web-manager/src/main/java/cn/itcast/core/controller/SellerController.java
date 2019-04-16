@@ -17,6 +17,7 @@ public class SellerController {
     @RequestMapping("/search")
     public PageResult search(Integer page, Integer rows, @RequestBody(required = false)Seller seller){
         return sellerService.search(page,rows,seller);
+
     }
     @RequestMapping("/findOne")
     public Seller findOne(String id){
@@ -30,6 +31,34 @@ public class SellerController {
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false,"修改失败");
+        }
+    }
+
+    @RequestMapping("/findOneForExcel")
+    public Result findOneForExcel(String id){
+
+
+        try {
+            sellerService.findOneForExcel(id);
+            return new Result(true, "商品数据导出成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(true, "商品数据导出失败");
+
+        }
+    }
+
+    @RequestMapping("/findOneForOrder")
+    public Result findOneForOrder(String id){
+
+
+        try {
+            sellerService.findOneForOrder(id);
+            return new Result(true, "订单数据导出成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(true, "订单数据导出失败");
+
         }
     }
 }

@@ -6,7 +6,7 @@
     <result column="parent_id" property="parentId" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="type_id" property="typeId" jdbcType="BIGINT" />
-    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,7 +68,7 @@
   </sql>
   <sql id="Base_Column_List" >
     <if test="fields == null" >
-      id, parent_id, name, type_id, status
+    id, parent_id, name, type_id,status
     </if>
     <if test="fields != null" >
       ${fields}
@@ -143,7 +143,7 @@
         #{typeId,jdbcType=BIGINT},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=VARCHAR},
+         #{status,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -200,6 +200,7 @@
         type_id = #{typeId,jdbcType=BIGINT},
       </if>
       <if test="status != null" >
+
         status = #{status,jdbcType=VARCHAR},
       </if>
     </set>
