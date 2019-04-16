@@ -120,7 +120,7 @@ app.controller('typeTemplateController' ,function($scope,$controller,brandServic
                 $scope.reloadList();//刷新列表
                 $scope.selectIds = [];
 			}
-		}
+		});
 	}
 
     $scope.uploadFile = function(){

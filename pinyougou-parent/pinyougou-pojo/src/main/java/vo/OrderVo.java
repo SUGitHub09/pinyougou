@@ -5,6 +5,8 @@ import cn.itcast.core.pojo.good.Goods;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public class OrderVo implements Serializable {
     private Long orderId;
@@ -117,5 +119,59 @@ public class OrderVo implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+	private String[] names;
+    private String[] dates;
+    private List<List<Map>> mapList;
+    private List<Map> series;
+    private Object[] moneys;
+    private List<Object> nums;
+
+    public List<Object> getNums() {
+        return nums;
+    }
+
+    public void setNums(List<Object> nums) {
+        this.nums = nums;
+    }
+
+    public Object[] getMoneys() {
+        return moneys;
+    }
+
+    public void setMoneys(Object[] moneys) {
+        this.moneys = moneys;
+    }
+
+    public List<Map> getSeries() {
+        return series;
+    }
+
+    public void setSeries(List<Map> series) {
+        this.series = series;
+    }
+
+    public List<List<Map>> getMapList() {
+        return mapList;
+    }
+
+    public void setMapList(List<List<Map>> mapList) {
+        this.mapList = mapList;
+    }
+
+    public String[] getNames() {
+        return names;
+    }
+
+    public void setNames(String[] names) {
+        this.names = names;
+    }
+
+    public String[] getDates() {
+        return dates;
+    }
+
+    public void setDates(String[] dates) {
+        this.dates = dates;
     }
 }

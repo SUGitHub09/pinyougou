@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ECharts</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- 引入angular的js -->
+    <script type="text/javascript" src="../plugins/angularjs/angular.min.js"></script>
+    <!-- 引入分页相关的JS和CSS -->
+    <script type="text/javascript" src="../plugins/angularjs/pagination.js"></script>
+    <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
+
+    <script type="text/javascript" src="../js/base_pagination.js"></script>
+    <script type="text/javascript" src="../js/controller/baseController.js"></script>
+    <script type="text/javascript" src="../js/controller/statisticsController.js"></script>
+    <script type="text/javascript" src="../js/service/statisticsService.js"></script>
+</head>
+<body class="hold-transition skin-red sidebar-mini" ng-app="pinyougou" ng-controller="statisticsController" ng-init="findAll()">
+    <input value="{{names}}" hidden id="names">
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="height:400px"></div>
+    <!-- ECharts单文件引入 -->
+    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+    <script type="text/javascript">
+            //var tname = ['Chrome','Firefox','Safari','IE9+','IE8-'];
+            //var tname = document.getElementById("names").value;
+            //alert(tname)
+            //var tname;
+            // 路径配置
+            require.config({
+                paths: {
+                    echarts: 'http://echarts.baidu.com/build/dist'
+                }
+            });
+
+            // 使用
+            require(
+                [
+                    'echarts',
+                    'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
+                ],
+                function (ec) {
+                    // 基于准备好的dom，初始化echarts图表
+                    var myChart = ec.init(document.getElementById('main'));
+
+                    $.ajax({
+                        url:'../statistics/findAll.do',
+                        type:'post',
+                        async: true,
+                        dataType:'json',
+                        success:function (result){
+
+                           var tname = result.names;
+                           var tdate = result.dates;
+                           var data = result.series;
+                           //alert(tname);
+                           //alert(tdate.length);
+
+
+
+                    var idx = 1;
+                    var option = {
+                        title: {
+                            text: '堆叠区域图'
+                        },
+                        tooltip : {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                label: {
+                                    backgroundColor: '#6a7985'
+                                }
+                            }
+                        },
+                        legend: {
+                            data:tname
+                        },
+                        toolbox: {
+                            feature: {
+                                saveAsImage: {}
+                            }
+                        },
+                        grid: {
+                            left: '3%',
+                            right: '4%',
+                            bottom: '3%',
+                            containLabel: true
+                        },
+                        xAxis : [
+                            {
+                                type : 'category',
+                                boundaryGap : false,
+                                data : tdate
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value'
+                            }
+                        ],
+                        series : data/*[
+                            {
+                                name:'邮件营销',
+                                type:'line',
+                                stack: '总量',
+                                areaStyle: {},
+                                data:[120, 132, 101, 134, 90, 230, 210]
+                            },
+                            {
+                                name:'联盟广告',
+                                type:'line',
+                                stack: '总量',
+                                areaStyle: {},
+                                data:[220, 182, 191, 234, 290, 330, 310]
+                            },
+                            {
+                                name:'视频广告',
+                                type:'line',
+                                stack: '总量',
+                                areaStyle: {},
+                                data:[150, 232, 201, 154, 190, 330, 410]
+                            },
+                            {
+                                name:'直接访问',
+                                type:'line',
+                                stack: '总量',
+                                areaStyle: {normal: {}},
+                                data:[320, 332, 301, 334, 390, 330, 320]
+                            },
+                            {
+                                name:'搜索引擎',
+                                type:'line',
+                                stack: '总量',
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        position: 'top'
+                                    }
+                                },
+                                areaStyle: {normal: {}},
+                                data:[820, 932, 901, 934, 1290, 1330, 1320]
+                            }
+                        ]*/
+                    };
+
+
+
+                            // 为echarts对象加载数据
+                    myChart.setOption(option);
+                        }});
+                }
+            );
+
+    </script>
+</body>

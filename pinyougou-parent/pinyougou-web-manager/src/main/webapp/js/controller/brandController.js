@@ -91,7 +91,7 @@ app.controller("brandController",function($scope,$controller,$http,brandService,
                 $scope.reloadList();//刷新列表
                 $scope.selectIds = [];
 			}
-		}
+		});
 	}
 
     $scope.uploadFile = function(){

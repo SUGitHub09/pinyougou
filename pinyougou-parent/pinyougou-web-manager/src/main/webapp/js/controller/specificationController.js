@@ -99,7 +99,7 @@ app.controller('specificationController' ,function($scope,$controller  ,specific
                 $scope.reloadList();//刷新列表
                 $scope.selectIds = [];
 			}
-		}
+		});
 	}
 
     $scope.uploadFile = function(){
